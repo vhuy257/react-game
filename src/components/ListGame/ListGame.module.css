@@ -1,0 +1,110 @@
+.listGameWrapper {
+    display: flex;
+    align-items: center;
+    flex-wrap: wrap;
+}
+
+.gameItem {
+    width: calc(20% - 20px);
+    margin: 10px;
+    position: relative;
+    cursor: pointer;
+}
+
+.gameItem::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    right: 0;
+    background: #000;
+    border-radius: 10px;
+    opacity: 0.5;
+    display: none;
+}
+
+.gameItem:hover::before,
+.gameItem:hover .gameItemName,
+.gameItem:hover .btnPlayGame{
+    display: block;
+}
+
+.gameItem img {
+    display: block;
+    width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.topTag {
+    background-color: green;
+    color: #fff;
+    position: absolute;
+    right: 0;
+    top: 0;
+    padding: 8px;  
+    border-top-right-radius: 10px;  
+    border-bottom-left-radius: 10px;
+}
+
+.newTag {
+    background-color: blue;
+    color: #fff;
+    position: absolute;
+    left: 0;
+    top: 0;
+    padding: 8px;
+    border-top-left-radius: 10px;
+    border-bottom-right-radius: 10px;
+}
+
+.gameItemName {
+    position: absolute;
+    top: 20%;
+    left: 50%;
+    transform: translateX(-50%);
+    color: #fff;
+    font-weight: bold;
+    text-align: center;
+    z-index: 10;
+    display: none;
+}
+
+.gameItem_amount {
+    position: absolute;
+    left: 10px;
+    bottom: 5px;
+    color: #fff;
+    font-weight: bold;
+    background: #000;
+    padding: 2px 10px;
+}
+
+.btnPlayGame {
+    position: absolute;
+    bottom: 20%;
+    cursor: pointer;
+    left: 50%;
+    width: 100px;
+    margin-left: -50px;
+    font-size: 16px;
+    color: #fff;
+    display: none;
+    background: red;
+    padding: 10px;
+    border: none;
+    z-index: 9;
+}
+
+@media screen and (max-width: 768px) {
+    .gameItem {
+        width: calc(100%/3 - 20px)
+    }
+}
+
+@media screen and (max-width: 414px) {
+    .gameItem {
+        width: calc(50% - 20px)
+    }
+}
