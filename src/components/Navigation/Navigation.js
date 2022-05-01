@@ -1,5 +1,5 @@
 import React, { useContext } from 'react';
-import { AppContext } from '../../App';
+import { AppContext } from '../AppWrapper/AppWrapper';
 import styles from './Navigation.module.css';
 import {
     ActiveMenuItemAction

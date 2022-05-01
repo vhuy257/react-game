@@ -1,13 +1,13 @@
-import './App.css';
-import Navigation from './components/Navigation/Navigation';
-import ListGame from './components/ListGame/ListGame';
+import './AppWrapper.module.css';
+import Navigation from '../Navigation/Navigation';
+import ListGame from '../ListGame/ListGame';
 import { createContext, useReducer, useEffect } from 'react';
-import { LoadAllGame, LoadJackPost } from './service/GameService';
-import reducer, { initialState } from './store/reducer';
+import { LoadAllGame, LoadJackPost } from '../../service/GameService';
+import reducer, { initialState } from '../../store/reducer';
 import {
   LoadAllGameAction,
   LoadCurrentJackpots
-} from './store/actions';
+} from '../../store/actions';
 
 export const AppContext = createContext(initialState);
 
