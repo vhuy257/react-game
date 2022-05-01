@@ -20,7 +20,7 @@ const ListGame = ({data, searchKeyword}) => {
                        item.categories.some((e) => {return searchKeyword.includes(e)}) && (
                         <div className={styles.gameItem} key={key}>
                             {filterClassTopNew(item.categories)}
-                            <img src={item.image}/>            
+                            <img alt={item.id} src={item.image}/>            
                             <div className={styles.gameItemName}>
                                 {item.name}
                             </div>
