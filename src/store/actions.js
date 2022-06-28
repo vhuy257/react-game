@@ -1,24 +1,17 @@
-export const LOAD_ALL_GAME = 'LOAD_ALL_GAME';
-export const ACTIVE_MENU_ITEM = 'ACTIVE_MENU_ITEM';
+export const LOAD_ALL_TASK = 'LOAD_ALL_TASK';
+export const CREATE_TASK = 'CREATE_TASK';
 export const LOAD_CURRENT_JACKPOT = 'LOAD_CURRENT_JACKPOT';
 
-export const LoadAllGameAction = (data) => {
+export const LoadAllTaskAction = (payload) => {
     return {
-        type: LOAD_ALL_GAME,
-        payload: data
+        type: LOAD_ALL_TASK,
+        payload
     }
 }
 
-export const ActiveMenuItemAction = (data) => {
+export const createTaskAction = (payload) => {
     return {
-        type: ACTIVE_MENU_ITEM,
-        payload: data
-    }
-}
-
-export const LoadCurrentJackpots = (data) => {
-    return {
-        type: LOAD_CURRENT_JACKPOT,
-        payload: data,
+        type: CREATE_TASK,
+        payload
     }
 }

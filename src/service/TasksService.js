@@ -1,9 +1,9 @@
 import { getDb, setDb} from "./db";
 
-export const createTask = async(album) => {
-    const dbLocal = [...getDb(), album];
+export const createTask = async(task) => {
+    const dbLocal = [...getDb(), task];
     await setDb(dbLocal);
-    return album;
+    return task;
 }
 
 export const getListTask = async() => {
