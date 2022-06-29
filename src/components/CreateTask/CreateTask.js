@@ -142,7 +142,7 @@ const CreateTask = ({dispatch}) => {
                         {renderTaskForm()}
                 </ModalBody>
                 <ModalFooter>
-                    <Button colorScheme='blue' mr={3} onClick={(e) => {addAlbum()}}>Add new task</Button>
+                    <Button rounded={'md'} size='sm' variant='filled' borderColor={'purple.500'} color='purple.500' mr={3} onClick={(e) => {addAlbum()}}>Add new task</Button>
                     <Button variant='ghost' onClick={onClose}>
                         Close
                     </Button>

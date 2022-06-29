@@ -16,8 +16,7 @@ const Info = () => {
         return (
             <Box bg='white' py='10' px='5' borderWidth='1px' borderStyle='solid' borderColor='gray.300' rounded='md' w='25%'>
                 <Flex alignItems='center' justify='space-between' color="gray.500" mb='5'>
-                    <Text fontWeight='bold'>{text}</Text>
-                    {icon}
+                    {text} {icon}
                 </Flex>
                 {heading}
             </Box>
@@ -48,10 +47,14 @@ const Info = () => {
                 </Flex>
             </Box>
             <Flex my='10' gap='3'>
-                {renderBoxInfo('Total time on Project', <BsBriefcase/>, (<Heading>03:39<small>h</small></Heading>))}
-                {renderBoxInfo('Earnings', <TbReportMoney/>, (<Heading><Text as='sup'>$</Text>2,409.20</Heading>))}
-                {renderBoxInfo('Costs', <BsBriefcase/>, (<Heading><Text as='sup'>$</Text>1,260.14</Heading>))}
-                {renderBoxInfo((<Text color="blue.400">Productivity</Text>), <MdOutlineShowChart/>, (<Heading>93.57%<Text as='sup'>%</Text><Text as='small' color="green.400">2.37%</Text></Heading>))}
+                {renderBoxInfo((<Text fontWeight="bold" >Total time on Project</Text>), <BsBriefcase/>, (<Heading>03:39<Text as='sup'>h</Text></Heading>))}
+                {renderBoxInfo((<Text fontWeight="bold" >Earnings</Text>), <TbReportMoney/>, (<Heading><Text as='sup'>$</Text>2,409.20</Heading>))}
+                {renderBoxInfo((<Text fontWeight="bold" >Costs</Text>), <BsBriefcase/>, (<Heading><Text as='sup'>$</Text>1,260.14</Heading>))}
+                {renderBoxInfo(
+                    (<Text fontWeight="bold"  color="blue.400">Productivity</Text>), 
+                    <MdOutlineShowChart/>, 
+                    (<Heading>93.57<Text as='sup'>%</Text><Text as='small' fontSize='sm' color="green.400">2.37%</Text></Heading>)
+                )}
             </Flex>
         </Box>
     )

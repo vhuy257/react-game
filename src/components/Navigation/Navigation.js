@@ -31,8 +31,8 @@ const Navigation = () => {
             </Flex>
             <List>
                 {
-                    Menu.map((item) => (
-                        <ListItem py='5' px='10' color="gray.500" fontWeight={'bold'} className={item.active? styles.active : '' }>
+                    Menu.map((item, key) => (
+                        <ListItem py='5' key={key} px='10' color="gray.500" fontWeight={'bold'} className={item.active? styles.active : '' }>
                             <ListIcon as={item.icon} color='gray.500' mr='5' />  
                             {item.text}
                         </ListItem>
