@@ -41,7 +41,7 @@ const CreateTask = ({dispatch}) => {
     const [isInvalid, setIsInvalid] = useState(false);
     const toast = useToast();
 
-    const addAlbum = async () => {
+    const addTask = async () => {
         try {            
             const task = {
                 id: shortid(),
@@ -67,9 +67,13 @@ const CreateTask = ({dispatch}) => {
                 toast({
                     title: 'Item created.',
                     position: 'bottom-right',
-                    description: "We've created your task",
                     status: 'success',
                     duration: 3000,
+                    render: () => (
+                        <Box color='black' rounded='md' p='5' shadow="md" borderLeftWidth='4px' borderLeftStyle="solid" borderLeftColor="green.400" bg='green.200'>
+                          We've created your task
+                        </Box>
+                    ),
                 });                
                 onClose();
             }
@@ -81,6 +85,11 @@ const CreateTask = ({dispatch}) => {
                 status: 'error',
                 duration: 2000,
                 isClosable: true,
+                render: () => (
+                    <Box color='black' rounded='md' p='5' shadow="md" borderLeftWidth='4px' borderLeftStyle="solid" borderLeftColor="red.400" bg='white'>
+                      ${error}
+                    </Box>
+                ),
             });
         }
     }
@@ -142,7 +151,7 @@ const CreateTask = ({dispatch}) => {
                         {renderTaskForm()}
                 </ModalBody>
                 <ModalFooter>
-                    <Button rounded={'md'} size='sm' variant='filled' borderColor={'purple.500'} color='purple.500' mr={3} onClick={(e) => {addAlbum()}}>Add new task</Button>
+                    <Button rounded={'md'} size='sm' variant='filled' borderColor={'purple.500'} color='purple.500' mr={3} onClick={(e) => {addTask()}}>Add new task</Button>
                     <Button variant='ghost' onClick={onClose}>
                         Close
                     </Button>

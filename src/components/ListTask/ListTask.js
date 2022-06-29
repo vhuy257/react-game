@@ -19,6 +19,14 @@ import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styles from './ListTask.module.scss';
 import { BsThreeDots, BsArrowUpCircle, BsClock } from 'react-icons/bs';
 
+const getItemStyle = (isDragging, draggableStyle) => ({
+    // some basic styles to make the items look a bit nicer
+    userSelect: "none",
+    border: isDragging ? '2px solid tomato' : 'none',
+    background: isDragging ? "#f3f3f3" : "white",
+    ...draggableStyle
+});
+
 const ListTask = ({dispatch, listTask}) => {
     const toast = useToast();
     const renderDate = (date) => {
@@ -79,6 +87,10 @@ const ListTask = ({dispatch, listTask}) => {
                         ref={provided.innerRef}
                         {...provided.draggableProps}
                         {...provided.dragHandleProps}
+                        style={getItemStyle(
+                            snapshot.isDragging,
+                            provided.draggableProps.style
+                        )}
                         bg="white" rounded={'md'} shadow='md' p="6" mt="5">
                             <Flex alignItems={'center'} justify='space-between'>
                                 <Text fontWeight={'bold'} color="blackAlpha.700">{item.name}</Text> <BsThreeDots/>
@@ -94,6 +106,22 @@ const ListTask = ({dispatch, listTask}) => {
         })
     }
 
+    const renderBoxDrop = (typeTask, title) => {
+        return (
+            <Droppable droppableId={typeTask}>   
+                {(provided, snapshot) => (
+                    <Box bg='gray.200' className={styles.boxWidth} borderRadius="2" p='5'>
+                        <Heading size="xs" color="gray.500">{title}</Heading>
+                        <List {...provided.droppableProps} ref={provided.innerRef} minHeight="100%">
+                            {renderList(typeTask)}
+                            <Box display="none">{provided.placeholder}</Box>
+                        </List>
+                    </Box>
+                )}
+            </Droppable>
+        )
+    }
+
     const updateTask = async(id, typeTask) => {
         try {
             await updateTypeTask(id, typeTask);
@@ -101,24 +129,35 @@ const ListTask = ({dispatch, listTask}) => {
             toast({
                 title: 'Item updated.',
                 position: 'bottom-right',
-                description: "We've updated your task",
                 status: 'success',
                 duration: 3000,
+                render: () => (
+                    <Box color='black' rounded='md' p='5' shadow="md" borderLeftWidth='4px' borderLeftStyle="solid" borderLeftColor="green.400" bg='white'>
+                      We've updated your task
+                    </Box>
+                ),
             });   
         } catch (error) {
             toast({
                 title: 'Error!',
                 position: 'bottom-right',
-                description: `${error}`,
                 status: 'error',
                 duration: 2000,
+                render: () => (
+                    <Box color='black' rounded='md' p='5' shadow="md" borderLeftWidth='4px' borderLeftStyle="solid" borderLeftColor="red.400" bg='white'>
+                      ${error}
+                    </Box>
+                ),
                 isClosable: true,
             });   
         }
     }
 
-    const onDragEnd = (result) => {
+    const onDragEnd = (result) => {        
         if(result.destination) {
+            if(result.destination.droppableId === result.source.droppableId) {
+                return false;
+            }
             const id       = result.draggableId;
             const typeTask = result.destination.droppableId;
             updateTask(id, typeTask);
@@ -128,51 +167,11 @@ const ListTask = ({dispatch, listTask}) => {
     return (
         <DragDropContext onDragEnd={onDragEnd}>
             <Box bg="white" borderTopWidth='1px' borderTopStyle='solid' borderTopColor='gray.200' p='2'>
-                <Flex gap='2'>
-                    <Droppable droppableId={TypeTask.TO_DO}>   
-                        {(provided, snapshot) => (
-                            <Box bg='gray.200' className={styles.boxWidth} borderRadius="2" p='5'>
-                                <Heading size="xs" color="gray.500">To Do</Heading>
-                                <List {...provided.droppableProps} ref={provided.innerRef} minHeight="100%">
-                                    {renderList(TypeTask.TO_DO)}
-                                    <Box display="none">{provided.placeholder}</Box>
-                                </List>
-                            </Box>
-                        )}
-                    </Droppable>
-                    <Droppable droppableId={TypeTask.ON_HOLD}>   
-                        {(provided, snapshot) => (
-                            <Box bg='gray.200' className={styles.boxWidth} borderRadius="2" p='5'>
-                                <Heading size="xs" color="gray.500">On Hold</Heading>
-                                <List {...provided.droppableProps} ref={provided.innerRef} minHeight="100%">
-                                    {renderList(TypeTask.ON_HOLD)}
-                                    <Box display="none">{provided.placeholder}</Box>
-                                </List>
-                            </Box>
-                        )}
-                    </Droppable>
-                    <Droppable droppableId={TypeTask.IN_PROGRESS}>   
-                        {(provided, snapshot) => (
-                            <Box bg='gray.200' className={styles.boxWidth} borderRadius="2" p='5'>
-                                <Heading size="xs" color="gray.500">In Progress</Heading>
-                                <List {...provided.droppableProps} ref={provided.innerRef} minHeight="100%">
-                                    {renderList(TypeTask.IN_PROGRESS)}
-                                    <Box display="none">{provided.placeholder}</Box>
-                                </List>
-                            </Box>
-                        )}
-                    </Droppable>
-                    <Droppable droppableId={TypeTask.DONE}>   
-                        {(provided, snapshot) => (
-                            <Box bg='gray.200' className={styles.boxWidth} borderRadius="2" p='5'>
-                                <Heading size="xs" color="gray.500">Done</Heading>
-                                <List {...provided.droppableProps} ref={provided.innerRef} minHeight="100%">
-                                    {renderList(TypeTask.DONE)}
-                                    <Box display="none">{provided.placeholder}</Box>
-                                </List>
-                            </Box>
-                        )}
-                    </Droppable>
+                <Flex gap='2' className={styles.boxWrapper}>
+                    {renderBoxDrop(TypeTask.TO_DO, 'To Do')}
+                    {renderBoxDrop(TypeTask.ON_HOLD, 'On Hold')}
+                    {renderBoxDrop(TypeTask.IN_PROGRESS, 'In Progress')}
+                    {renderBoxDrop(TypeTask.DONE, 'Done')}
                 </Flex>
             </Box>
         </DragDropContext>

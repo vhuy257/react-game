@@ -9,9 +9,10 @@ import { loadAllTaskAction } from '../../store/actions';
 import { Box } from '@chakra-ui/react';
 import { AppContext } from '../../store/appContext';
 import reducer, { initialState } from '../../store/reducer';
+import styles from './App.module.scss';
 
 const AppContainer = () => {
-    const [{listTask}, dispatch] = useReducer(reducer, initialState);  
+    const [{listTask, showMenuBar}, dispatch] = useReducer(reducer, initialState);  
 
     useEffect(() => {
         const fetchData = async() => {
@@ -29,12 +30,12 @@ const AppContainer = () => {
                 dispatch
             }}
         >
-            <Flex gap={'20'} bg='gray.200'>
+            <Flex bg='gray.200' className={styles.appContainer}>
                 <Box w={'20%'} bg='white'>
-                    <Navigation />
+                    <Navigation dispatch={dispatch} showMenuBar={showMenuBar}/>
                 </Box>
-                <Box w={'100%'} pr='10' mb='50'>
-                    <Info />
+                <Box mb='50' className={styles.boxRight}>
+                    <Info dispatch={dispatch} showMenuBar={showMenuBar}/>
                     <Box rounded={'md'} shadow="md" >
                         <CreateTask dispatch={dispatch}/>
                         <ListTask   dispatch={dispatch} listTask={listTask}/>

@@ -1,9 +1,37 @@
+@import '../../styles/mixins';
+
 .active {
-    border-left: 2px solid #a29bfe;
+    border-left: 4px solid #a29bfe;
     color: #a29bfe;
     font-weight: bold;
     
     svg {
         fill: #a29bfe;
+    }
+}
+
+.showMobile {
+    @include mobile {
+        .mainNavigation {
+            left: 0;
+            bottom: 0;
+            top: 0;
+            background: #fff;
+            z-index: 99;
+        }
+    }
+} 
+
+.mainNavigation {
+    transition: all .3s ease-in-out;
+    @include mobile {
+        position: fixed;
+        left: -1000%;
+    }
+
+    .toggleMenuBar {
+        @include desktop {
+            display: none;
+        }
     }
 }

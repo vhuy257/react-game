@@ -1,0 +1,19 @@
+@import '../../styles/mixins';
+
+.appContainer {
+    flex-wrap: wrap;
+    gap: 0;
+    padding: 10px;
+
+    @include desktop {
+        gap: 20px;
+        flex-wrap: nowrap;
+    }
+}
+
+.boxRight {
+    @include desktop {
+        width: 100%;
+        padding-right: 10px;
+    }
+}

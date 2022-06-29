@@ -5,13 +5,15 @@ import {
     ListItem,
     ListIcon
 } from '@chakra-ui/react';
+import { toggleMenuBar } from '../../store/actions';
 import { BsReverseLayoutTextWindowReverse, BsClockHistory, BsApp, BsBriefcase } from 'react-icons/bs';
 import { AiOutlinePicture, AiOutlineSetting, AiOutlineCalendar } from 'react-icons/ai';
 import { SiMicrosoftteams } from 'react-icons/si';
 import { TbUsers } from 'react-icons/tb';
+import { GiHamburgerMenu } from 'react-icons/gi';
 import styles from './Navigation.module.scss';
 
-const Navigation = () => {
+const Navigation = ({dispatch, showMenuBar}) => {
     const Menu = [
         {text: 'Dashboard', icon: BsReverseLayoutTextWindowReverse},
         {text: 'Real-Time Tracking', icon: BsClockHistory},
@@ -25,20 +27,23 @@ const Navigation = () => {
     ]
 
     return(
-        <Box width='100%' minW='300px'>
-            <Flex alignItems='center' justify='center' p='10' borderBottomWidth={'1px'} borderBottomStyle={'solid'} borderBottomColor={'gray.200'} >
-                <img src="../images/logo.png" alt="Logo" width={'145px'}/>
-            </Flex>
-            <List>
-                {
-                    Menu.map((item, key) => (
-                        <ListItem py='5' key={key} px='10' color="gray.500" fontWeight={'bold'} className={item.active? styles.active : '' }>
-                            <ListIcon as={item.icon} color='gray.500' mr='5' />  
-                            {item.text}
-                        </ListItem>
-                    ))
-                }
-            </List>
+        <Box className={showMenuBar ? styles.showMobile : ''}>
+            <Box width='100%' minW='300px' className={styles.mainNavigation}>
+                <Flex alignItems='center' justify='space-between' p='10' borderBottomWidth={'1px'} borderBottomStyle={'solid'} borderBottomColor={'gray.200'}>
+                    <img src="../images/logo.png" alt="Logo" width={'145px'}/>
+                    <Box className={styles.toggleMenuBar} cursor='pointer' onClick={() => {dispatch(toggleMenuBar())}}><GiHamburgerMenu/></Box>
+                </Flex>
+                <List>
+                    {
+                        Menu.map((item, key) => (
+                            <ListItem py='5' key={key} px='10' color="gray.500" fontWeight={'bold'} className={item.active? styles.active : '' }>
+                                <ListIcon as={item.icon} color='gray.500' mr='5' />  
+                                {item.text}
+                            </ListItem>
+                        ))
+                    }
+                </List>
+            </Box>
         </Box>
     )
 }

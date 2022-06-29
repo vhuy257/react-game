@@ -1,0 +1,32 @@
+@import '../../styles/mixins';
+
+.boxInfo {
+    width: 25%;
+
+    @include mobile {
+        width: 100%;
+        flex-wrap: wrap;
+    }
+}
+
+.boxDetail {
+    @include mobile {
+        flex-wrap: wrap;
+    }
+}
+
+.boxInfoWrapper {
+    @include mobile {
+        flex-wrap: wrap;
+    }
+}
+
+.headerMobile {
+    background: #fff;
+    padding: 0 10px;
+    @include flex($align: center, $justify: space-between);
+
+    @include desktop {
+        display: none;
+    }
+}

@@ -1,0 +1,21 @@
+@import './variables';
+
+@mixin mobile { 
+    @media (max-width: #{$mobile-width - 1px}) {     
+        @content;   
+    } 
+}  
+
+@mixin desktop {   
+    @media (min-width: #{$mobile-width}) {     
+        @content;  
+    } 
+}
+
+@mixin flex($wrap: nowrap, $dir: row, $align: flex-start, $justify: flex-start) {
+    display: flex;
+    flex-wrap: $wrap;
+    flex-direction: $dir;
+    align-items: $align;
+    justify-content: $justify;
+}

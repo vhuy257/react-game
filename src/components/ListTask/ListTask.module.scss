@@ -1,3 +1,35 @@
+@import '../../styles/mixins';
+
+.boxMainWrapper {
+    min-height: 200px;
+
+    @include desktop {
+        min-height: 600px;
+    }
+}
+
+.boxWrapper {
+    flex-wrap: wrap;
+
+    @include desktop {
+        flex-wrap: nowrap;
+    }
+}
+
 .boxWidth {
-    width: 25%;    
+    width: 100%;
+    min-height: 200px;
+
+    @include desktop {
+        min-height: 600px;
+        width: 25%;   
+    }
+}
+
+.listBox {
+    min-height: 400px;
+
+    @include mobile {
+        display: none;
+    }
 }

@@ -1,6 +1,7 @@
 export const LOAD_ALL_TASK = 'LOAD_ALL_TASK';
 export const CREATE_TASK = 'CREATE_TASK';
 export const UPDATE_TYPE_TASK = 'UPDATE_TYPE_TASK';
+export const TOGGLE_MENU_BAR = 'TOGGLE_MENU_BAR';
 
 export const loadAllTaskAction = (payload) => {
     return {
@@ -23,5 +24,11 @@ export const updateTaskTypeAction = (id, type) => {
             id, 
             type
         }
+    }
+}
+
+export const toggleMenuBar = () => {
+    return {
+        type: TOGGLE_MENU_BAR,
     }
 }
