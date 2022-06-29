@@ -16,9 +16,9 @@ export const deleteItem = async(id) => {
     return setDb(newList);
 }
 
-export const updateTask = async(id) => {
+export const updateTypeTask = async(id, typeTask) => {
     const db = await getDb();
     const indexList = db.findIndex(item => item.id === id);
-    db[indexList].marked = !db[indexList].marked;
+    db[indexList].type = typeTask;
     return setDb(db);
 }

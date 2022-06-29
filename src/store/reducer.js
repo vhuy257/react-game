@@ -1,6 +1,7 @@
 import { 
     LOAD_ALL_TASK,
-    CREATE_TASK
+    CREATE_TASK,
+    UPDATE_TYPE_TASK
  } from "./actions";
 
 export const initialState = {
@@ -18,6 +19,12 @@ export default function reducer(state, action) {
             return { 
                 ...state,
                 listTask: [...state.listTask, action.payload]
+            };
+        case UPDATE_TYPE_TASK:
+            const id = state.listTask.findIndex((item) => item.id === action.payload.id);
+            state.listTask[id].type = action.payload.type
+            return {
+                ...state
             };
         default:
             return state;

@@ -1,8 +1,8 @@
 export const LOAD_ALL_TASK = 'LOAD_ALL_TASK';
 export const CREATE_TASK = 'CREATE_TASK';
-export const LOAD_CURRENT_JACKPOT = 'LOAD_CURRENT_JACKPOT';
+export const UPDATE_TYPE_TASK = 'UPDATE_TYPE_TASK';
 
-export const LoadAllTaskAction = (payload) => {
+export const loadAllTaskAction = (payload) => {
     return {
         type: LOAD_ALL_TASK,
         payload
@@ -13,5 +13,15 @@ export const createTaskAction = (payload) => {
     return {
         type: CREATE_TASK,
         payload
+    }
+}
+
+export const updateTaskTypeAction = (id, type) => {
+    return {
+        type: UPDATE_TYPE_TASK,
+        payload: {
+            id, 
+            type
+        }
     }
 }

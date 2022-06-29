@@ -15,8 +15,10 @@ import {
     Stack,
     Select,
     FormLabel,
-    Input,      
-  } from '@chakra-ui/react';
+    Input,
+    Heading,    
+    Flex,  
+} from '@chakra-ui/react';
 
 import { createTask } from '../../service/TasksService';
 import { createTaskAction } from '../../store/actions';
@@ -24,19 +26,19 @@ import DateTimePicker from 'react-datetime-picker';
 import { FaRegCalendarAlt } from 'react-icons/fa';
 import './react-datetime-picker.css';
 import shortid from 'shortid';
+import {
+    TypeTask,
+    optionsAssignee,
+    optionPrioprity
+} from '../../constants/config';
 
 const CreateTask = ({dispatch}) => {
-    const { isOpen, onOpen, onClose } = useDisclosure();
+    const {isOpen, onOpen, onClose} = useDisclosure();
     const [taskDate, onChange] = useState(new Date());
     const [assign, setAssign] = useState('2');
+    const [prioprity, setPrioprity] = useState('high');
     const titleRef = useRef(null);    
-    const optionsAssignee = [
-        {value: '1', label: 'Jack'},
-        {value: '2', label: 'Chee'},
-        {value: '3', label: 'Linda'},
-    ]
-    const prioprityRef = useRef(null);
-    const [isInvalid, setIsInvalid]      = useState(false);
+    const [isInvalid, setIsInvalid] = useState(false);
     const toast = useToast();
 
     const addAlbum = async () => {
@@ -46,7 +48,8 @@ const CreateTask = ({dispatch}) => {
                 name: titleRef.current.value,
                 date: taskDate.toISOString(),
                 assign: assign,
-                prioprity: false,
+                prioprity: prioprity,
+                type: TypeTask.TO_DO
             };
             
             if(titleRef.current.value === '') {
@@ -59,18 +62,21 @@ const CreateTask = ({dispatch}) => {
     
             if(resultTask) {
                 titleRef.current.value = '';
-                setAssign('');
+                setAssign('2');
                 setIsInvalid(false);
                 toast({
                     title: 'Item created.',
-                    description: "We've created your album",
+                    position: 'bottom-right',
+                    description: "We've created your task",
                     status: 'success',
                     duration: 3000,
                 });                
+                onClose();
             }
         } catch (error) {
             toast({
                 title: 'Error!',
+                position: 'bottom-right',
                 description: `${error} . Please create again!!`,
                 status: 'error',
                 duration: 2000,
@@ -81,8 +87,8 @@ const CreateTask = ({dispatch}) => {
 
     const renderTaskForm = () => {        
         return (
-            <Box bgColor='white'>
-                    <Box>
+            <Box bg='white'>
+                    <Box bg='white'>
                         <FormControl isInvalid={isInvalid}>
                             <FormLabel htmlFor='task-title'>Title</FormLabel>
                             <Input ref={titleRef} id='task-title' className='task-title'/>                       
@@ -110,10 +116,10 @@ const CreateTask = ({dispatch}) => {
                     <Box mt='4'>
                         <FormLabel htmlFor='task-priority'>Priority</FormLabel>
                         <Stack spacing={3}>
-                            <Select size='md' ref={prioprityRef}>
-                                <option value='1'>High</option>
-                                <option value='2'>Medium</option>
-                                <option value='3'>Low</option>
+                            <Select size='md' value={prioprity} onChange={(e) => {setPrioprity(e.target.value)}}>
+                                {optionPrioprity.map((option, key) => (
+                                    <option value={option.value} key={key}>{option.label}</option>
+                                ))}
                             </Select>
                         </Stack>
                     </Box>
@@ -123,7 +129,10 @@ const CreateTask = ({dispatch}) => {
 
     return (
         <>
-            <Button onClick={onOpen}>Create Task</Button>
+            <Flex alignItems='center' p='5' borderBottom borderColor='gray.200' bg='white'>
+                <Heading size={'md'} color="gray.500">Tasks</Heading>
+                <Button onClick={onOpen} size='sm' color='purple.500' rounded={'md'} variant='outline' borderColor={'purple.500'} ml='5'>Add New Task</Button>
+            </Flex>   
             <Modal isCentered motionPreset='slideInBottom' isOpen={isOpen} onClose={onClose}>
                 <ModalOverlay />
                 <ModalContent>
