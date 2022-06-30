@@ -18,6 +18,7 @@ import Moment from 'react-moment';
 import { DragDropContext, Droppable, Draggable } from 'react-beautiful-dnd';
 import styles from './ListTask.module.scss';
 import { BsThreeDots, BsArrowUpCircle, BsClock } from 'react-icons/bs';
+import { AiOutlinePlus } from 'react-icons/ai';
 
 const getItemStyle = (isDragging, draggableStyle) => ({
     // some basic styles to make the items look a bit nicer
@@ -27,7 +28,7 @@ const getItemStyle = (isDragging, draggableStyle) => ({
     ...draggableStyle
 });
 
-const ListTask = ({dispatch, listTask}) => {
+const ListTask = ({dispatch, listTask, onOpen}) => {
     const toast = useToast();
     const renderDate = (date) => {
         return (
@@ -112,9 +113,20 @@ const ListTask = ({dispatch, listTask}) => {
                 {(provided, snapshot) => (
                     <Box bg='gray.200' className={styles.boxWidth} borderRadius="2" p='5'>
                         <Heading size="xs" color="gray.500">{title}</Heading>
-                        <List {...provided.droppableProps} ref={provided.innerRef} minHeight="100%">
+                        <List {...provided.droppableProps} ref={provided.innerRef} minHeight="100%" pb="20px">
                             {renderList(typeTask)}
                             <Box display="none">{provided.placeholder}</Box>
+                            <Flex onClick={onOpen}
+                                cursor="pointer" 
+                                color="gray.500" 
+                                fontWeight="bold"
+                                alignItems="center"
+                                justify="center"
+                                textAlign="center" 
+                                position="absolute" 
+                                left="50%" bottom="10px" transform="translateX(-50%)">
+                                <AiOutlinePlus/> <Text ml="1">Add new task</Text>
+                            </Flex>
                         </List>
                     </Box>
                 )}
@@ -166,7 +178,7 @@ const ListTask = ({dispatch, listTask}) => {
 
     return (
         <DragDropContext onDragEnd={onDragEnd}>
-            <Box bg="white" borderTopWidth='1px' borderTopStyle='solid' borderTopColor='gray.200' p='2'>
+            <Box bg="white" borderTopWidth='1px' borderTopStyle='solid' borderTopColor='gray.200' p='2' borderBottomLeftRadius='5px' borderBottomRightRadius='5px'>
                 <Flex gap='2' className={styles.boxWrapper}>
                     {renderBoxDrop(TypeTask.TO_DO, 'To Do')}
                     {renderBoxDrop(TypeTask.ON_HOLD, 'On Hold')}

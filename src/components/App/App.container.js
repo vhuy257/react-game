@@ -1,6 +1,10 @@
 import { React, useEffect, useReducer } from 'react';
-import { Flex } from '@chakra-ui/react';
+import { 
+    Flex,
+    useDisclosure, 
+} from '@chakra-ui/react';
 import CreateTask from '../CreateTask/CreateTask';
+import CreateTaskModal from '../CreateTaskModal/CreateTaskModal';
 import ListTask from '../ListTask/ListTask';
 import Navigation from '../Navigation/Navigation';
 import Info from '../Info/Info';
@@ -13,6 +17,7 @@ import styles from './App.module.scss';
 
 const AppContainer = () => {
     const [{listTask, showMenuBar}, dispatch] = useReducer(reducer, initialState);  
+    const {isOpen, onOpen, onClose} = useDisclosure();
 
     useEffect(() => {
         const fetchData = async() => {
@@ -34,13 +39,14 @@ const AppContainer = () => {
                 <Box w={'20%'} bg='white'>
                     <Navigation dispatch={dispatch} showMenuBar={showMenuBar}/>
                 </Box>
-                <Box mb='50' className={styles.boxRight}>
+                <Box className={styles.boxRight}>
                     <Info dispatch={dispatch} showMenuBar={showMenuBar}/>
                     <Box rounded={'md'} shadow="md" >
-                        <CreateTask dispatch={dispatch}/>
-                        <ListTask   dispatch={dispatch} listTask={listTask}/>
+                        <CreateTask onOpen={onOpen}/>
+                        <ListTask   onOpen={onOpen} dispatch={dispatch} listTask={listTask}/>
                     </Box>
                 </Box>
+            <CreateTaskModal isOpen={isOpen} onOpen={onOpen} onClose={onClose} dispatch={dispatch}/>
             </Flex>
         </AppContext.Provider>
     )

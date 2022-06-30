@@ -17,9 +17,9 @@ import styles from './Info.module.scss';
 const Info = ({dispatch}) => {
     const renderBoxInfo = (text, icon, heading) => {
         return (
-            <Box bg='white' py='10' px='5' borderWidth='1px' borderStyle='solid' borderColor='gray.300' rounded='md' className={styles.boxInfo}>
+            <Box bg='white' py='10' px='5' shadow='xs' rounded='md' className={styles.boxInfo}>
                 <Flex alignItems='center' justify='space-between' color="gray.500" mb='5'>
-                    {text} {icon}
+                    {text} <Box fontSize='2xl'>{icon}</Box>
                 </Flex>
                 {heading}
             </Box>

@@ -19,9 +19,10 @@
 .boxWidth {
     width: 100%;
     min-height: 200px;
-
+    position: relative;
+    
     @include desktop {
-        min-height: 600px;
+        min-height: 400px;
         width: 25%;   
     }
 }
